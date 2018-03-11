@@ -900,6 +900,7 @@
 			background: slide.getAttribute( 'data-background' ),
 			backgroundSize: slide.getAttribute( 'data-background-size' ),
 			backgroundImage: slide.getAttribute( 'data-background-image' ),
+			backgroundImageOpacity: slide.getAttribute( 'data-background-image-opacity' ),
 			backgroundVideo: slide.getAttribute( 'data-background-video' ),
 			backgroundIframe: slide.getAttribute( 'data-background-iframe' ),
 			backgroundColor: slide.getAttribute( 'data-background-color' ),
@@ -926,10 +927,11 @@
 		// Create a hash for this combination of background settings.
 		// This is used to determine when two slide backgrounds are
 		// the same.
-		if( data.background || data.backgroundColor || data.backgroundImage || data.backgroundVideo || data.backgroundIframe ) {
+		if( data.background || data.backgroundColor || data.backgroundImage || data.backgroundVideo || data.backgroundIframe || data.backgroundImageOpacity) {
 			element.setAttribute( 'data-background-hash', data.background +
 															data.backgroundSize +
 															data.backgroundImage +
+															data.backgroundImageOpacity +
 															data.backgroundVideo +
 															data.backgroundIframe +
 															data.backgroundColor +
@@ -3212,6 +3214,7 @@
 				background.setAttribute( 'data-loaded', 'true' );
 
 				var backgroundImage = slide.getAttribute( 'data-background-image' ),
+					backgroundImageOpacity = slide.getAttribute( 'data-background-image-opacity' ),
 					backgroundVideo = slide.getAttribute( 'data-background-video' ),
 					backgroundVideoLoop = slide.hasAttribute( 'data-background-video-loop' ),
 					backgroundVideoMuted = slide.hasAttribute( 'data-background-video-muted' ),
@@ -3219,7 +3222,13 @@
 
 				// Images
 				if( backgroundImage ) {
-					background.style.backgroundImage = 'url('+ backgroundImage +')';
+					var opacity = '';
+					if (backgroundImageOpacity == "black") {
+						opacity = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),"
+					} else if (backgroundImageOpacity == "white") {
+						opacity = "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),"
+					}
+					background.style.backgroundImage = opacity + 'url('+ backgroundImage +')';
 				}
 				// Videos
 				else if ( backgroundVideo && !isSpeakerNotes() ) {

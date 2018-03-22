@@ -1,4 +1,0 @@
-[submodule "mathjax"]
-	path = vendor/mathjax
-	url = https://github.com/mathjax/MathJax.git
-	branch = v2.6-latest
